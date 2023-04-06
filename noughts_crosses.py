@@ -24,41 +24,45 @@ def display_board(_board):
     print(f'| {_board[6]} | {_board[7]} | {_board[8]} |')
     print('-------------\n')
 
-
-board = [' ' for _ in range(0, 9)]
-demo_board = [str(i + 1) for i in range(0, 9)]
-current_player = 1
-
-print('\nNoughts and Crosses')
-print('===================\n')
-print('Board squares are numbered as follows:')
-display_board(demo_board)
-
-print('\nCurrent board:')
-display_board(board)
-
-for i in range(0, 9):
-    
-    while True:
-        try:
-            move = int(input(f'\nPlease enter move for Player {current_player}: '))
-            if move < 1 or move > 9:
-                raise ValueError
-        except ValueError:
-            print('Please enter a whole number between 1 and 9')
-            continue
-        if board[move - 1] != ' ':
-            print('That square is already taken')
-            continue
-        break
-
-    symbol = 'X' if current_player == 1 else 'O'
-    board[move - 1] = symbol
-    current_player = current_player % 2 + 1
+def play_game():
+    board = [' ' for _ in range(0, 9)]
+    current_player = 1
 
     print('\nCurrent board:')
     display_board(board)
 
-    if move_is_win(move, symbol, board):
-        print(f'Player {current_player} wins!!\n')
-        break
+    for i in range(0, 9):
+        
+        while True:
+            try:
+                move = int(input(f'\nPlease enter move for Player {current_player}: '))
+                if move < 1 or move > 9:
+                    raise ValueError
+            except ValueError:
+                print('Please enter a whole number between 1 and 9')
+                continue
+            if board[move - 1] != ' ':
+                print('That square is already taken')
+                continue
+            break
+
+        symbol = 'X' if current_player == 1 else 'O'
+        board[move - 1] = symbol
+        current_player = current_player % 2 + 1
+
+        print('\nCurrent board:')
+        display_board(board)
+
+        if move_is_win(move, symbol, board):
+            print(f'Player {current_player} wins!!\n')
+            break
+
+def game_intro():
+    demo_board = [str(i + 1) for i in range(0, 9)]
+    print('\nNoughts and Crosses')
+    print('===================\n')
+    print('Board squares are numbered as follows:')
+    display_board(demo_board)
+
+game_intro()
+play_game()
